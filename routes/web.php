@@ -27,3 +27,17 @@ Auth::routes();
 Route::resource('posts', PostController::class);
 Route::resource('comments', CommentController::class);
 Route::get('/search', [PostController::class, 'search']);
+Route::get('/category', [PostController::class, 'category']);
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/create', [App\Http\Controllers\PostController::class, 'index'])->name('create');
+Route::get('send', 'NotifyController@index');
+
+Route::get('mail', function () {
+    $order = App\Order::find(1);
+
+    return (new App\Notifications\StatusUpdate($order))
+                ->toMail($order->user);
+});

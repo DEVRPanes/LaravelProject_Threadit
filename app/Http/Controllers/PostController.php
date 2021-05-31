@@ -13,7 +13,8 @@ class PostController extends Controller
 
     // we can also try auth inside web php
     public function __construct(){
-        $this->middleware('auth')->only('create', 'edit', 'destroy');
+        $this->middleware('verified');
+
     }
 
     /**
@@ -51,7 +52,9 @@ class PostController extends Controller
         //
         $request->validate([
             'title' => 'required|unique:posts|max:225',
-            'description' => 'required'
+            'description' => 'required',
+            'category' => 'required',
+            'tags' => 'required'
         ]);
 
         if($request->hasFile('img')){
@@ -84,7 +87,20 @@ class PostController extends Controller
     
         // Search in the title and body columns from the posts table
         $posts = Post::query()
-            ->where('title', 'LIKE', "%{$search}%")
+            ->where('Title', 'LIKE', "%{$search}%")
+            ->orwhere('tags', 'LIKE', "%{$search}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+        return view('welcome', compact('posts'));
+    }
+    public function category(Request $request){
+        // Get the search value from the request
+        $category = $request->input('category');
+    
+        // Search in the title and body columns from the posts table
+        $posts = Post::query()
+            ->where('category', 'LIKE', "%{$category}%")
             ->get();
     
         // Return the search view with the resluts compacted

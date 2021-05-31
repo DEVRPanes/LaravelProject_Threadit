@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Bootstrap News Template - Free HTML Templates</title>
+        <title>Threadit</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Bootstrap News Template - Free HTML Templates" name="keywords">
         <meta content="Bootstrap News Template - Free HTML Templates" name="description">
@@ -19,12 +19,11 @@
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-   
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
         <!-- Template Stylesheet -->
         <link href= "{{ asset('/storage/css/style.css') }}" rel="stylesheet">
         <!-- Template Stylesheet -->
-    
 
     </head>
 
@@ -39,7 +38,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4">
                         <div class="b-logo"> 
-                            <a href="index.html">
+                            <a href="{{ url('home') }}">
                                 <img src="{{ asset('/storage/img/logo.jpg') }}" alt="Logo">
                             </a>
                         </div>
@@ -52,7 +51,7 @@
                     <div class="col-lg-3 col-md-4">
                         <div class="b-search">
                             <form  action="/search" method="GET" role="search">
-                            <input type="text" placeholder="Search">
+                            <input type="text" placeholder="Search" id="search" name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
                         </div>
@@ -68,22 +67,19 @@
             @if (Route::has('login'))
             @auth
                 <nav class="navbar navbar-expand-md " style="background-color:black" >
-                    <a href="{{ url('/home') }}" class="navbar-brand" style="color:white">Create Forum</a>
+                    <a href="{{ url('/create') }}" class="navbar-brand" style="color:white">Create Forum</a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" >
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" style="background-color:black" >
                         <div class="navbar-nav mr-auto " >
-                            <a href="welcome.php" class="nav-item nav-link active" style="color:white">Home</a>
-                             <!--<div class="nav-item dropdown">
-                               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" style="color:white">Dropdown</a>
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item" style="color:white">Sub Item 1</a>
-                                    <a href="#" class="dropdown-item" style="color:white">Sub Item 2</a>
+                        <a href="{{ url('home') }}" class="nav-item nav-link active" style="color:white">Home</a>
+                             <div class="nav-item dropdown">
+                             <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Filters</button>
                                 
                             </div>   </div>
-                            <a href="single-page.html" class="nav-item nav-link" style="color:white">Single Page</a>-->
+                        
                             <a href="contact.html" class="nav-item nav-link" style="color:white">Contact Us</a>
                         </div>
                         @endauth
@@ -102,310 +98,53 @@
         </div>
         <!-- Nav Bar End -->
 
+        <br><br>
         <!-- Top News Start-->
-        <div class="top-news">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 tn-left">
-                        <div class="row tn-slider">
-                            <div class="col-md-6">
-                                <div class="tn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                <a href="{{ route('posts.show', $post->id) }}">
+        <div class="container">
+    
+    <div class="row justify-content-center">
+ 
+        <div class="col-md-8">
+   
+            <br><br>      <br><br>
+           
+     
+
+                    <table class="table table-borderless bg-light table-hover" style="width: 100%">
+                        <thead
+                          class="text-white bg-dark"
+                          style="border-radius: 25%"
+                        >
+                          <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Tags</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table">
+                          @foreach ($posts as $post)
+                          <tr>
+                            <td class="badge badge-pill badge-info text-light mt-3">{{ $post->Title }}</td>
+                            <td>{{ $post->Description }}</td>
+                            <td>{{ $post->category }}</td>
+                            <td>{{ $post->tags }}</td>
+                            <td> @if ($post->img != '')
+                                   <a href="{{ route('posts.show', $post->id) }}">
                                 <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
                                 </a>
-                                @endif
-                                    <div class="tn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                            <div class="col-md-6">
-                                <div class="tn-img">
-                                <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                    <div class="tn-title">
-                                        <a  href="">Create new Forum now!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 tn-right">
-                        <div class="row">
-                        <div class="col-md-6">
-                                <div class="tn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="tn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                       
-                           
-                        </div>
-                    </div>
+                                @endif</td>
+                            <td><a class="btn btn-success" href="/posts/{{ $post->id }}"> View </a></td>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+
                 </div>
-            </div>
-        </div>
-        <!-- Top News End-->
-
-        <!-- Category News Start-->
-        <div class="cat-news" style="color:#45b6fe">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2 style="color:#45b6fe">  Sports</h2>
-                        <div class="row cn-slider">
-                            <div class="col-md-6">
-                            <div class="cn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="cn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                            <div class="col-md-6">
-                                <div class="cn-img">
-                                    <img src="{{ asset('/storage/img/news-350x223-4.jpg') }}" />
-                                    <div class="cn-title">
-                                        <a href="">Explore Forum Category!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h2 style="color:#45b6fe">Technology</h2>
-                        <div class="row cn-slider">
-                            <div class="col-md-6">
-                            <div class="cn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="cn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                            <div class="col-md-6">
-                                <div class="cn-img">
-                                <img src="{{ asset('/storage/img/news-350x223-4.jpg') }}" />
-                                    <div class="cn-title">
-                                        <a href="">Explore Forum Category!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Category News End-->
-
-        <!-- Category News Start-->
-        <div class="cat-news">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2 style="color:#45b6fe">Business</h2>
-                        <div class="row cn-slider">
-                            <div class="col-md-6">
-                            <div class="cn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="cn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                 
-                            <div class="col-md-6">
-                                <div class="cn-img">
-                                <img src="{{ asset('/storage/img/news-350x223-4.jpg') }}" />
-                                    <div class="cn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">Explore Forum Category!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h2 style="color:#45b6fe">Entertainment</h2>
-                        <div class="row cn-slider">
-                            <div class="col-md-6">
-                            <div class="cn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                   <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="cn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach 
-                      
-                            <div class="col-md-6">
-                                <div class="cn-img">
-                                <img src="{{ asset('/storage/img/news-350x223-4.jpg') }}" />
-                                    <div class="cn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">Explore Forum Category!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Category News End-->
-        
-        <!-- Tab News Start-->
-        <div class="tab-news">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul class="nav nav-pills nav-justified">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="pill" href="#featured" style="color:#45b6fe">Featured News</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#popular" style="color:#45b6fe">Popular News</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#latest"style="color:#45b6fe" >Latest News</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div id="featured" class="container tab-pane active">
-                            <div class="tn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                   <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="tn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach 
-                      
-
-                         
-                            <div id="popular" class="container tab-pane fade">
-                                <div class="tn-news">
-                                <div class="tn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                   <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="tn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <ul class="nav nav-pills nav-justified">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="pill" href="#m-viewed">Most Viewed</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#m-read">Most Read</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#m-recent">Most Recent</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div id="m-viewed" class="container tab-pane active">
-                                <div class="tn-news">
-                                <div class="tn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                   <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="tn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach 
-                      
-                               
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Tab News Start-->
-
-        <!-- Main News Start-->
-        <div class="main-news">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="row">
-                            <div class="col-md-4">
-                            <div class="mn-news">
-                                <div class="tn-img">
-                                @foreach ($posts as $post)
-                                @if ($post->img != '')
-                                   <a href="{{ route('posts.show', $post->id) }}">
-                                <img style="width:100px" class="card-img-top" src="{{ asset('/storage/img/'. $post->img) }}" alt="Card image cap" width="50%">
-                                </a>
-                                @endif
-                                    <div class="mn-title">
-                                        <a href="{{ route('posts.show', $post->id) }}">{{$post->Title}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach 
-                      
-                            </div>
-                        </div>
-                    </div>
+    </div>
+</div>
 
                     <div class="col-lg-3">
                         <div class="mn-list">
@@ -522,7 +261,49 @@
         <script src="{{ asset('/storage/lib/slick/slick.min.js') }}"></script>
 
         <!-- Template Javascript -->
+     
 
+<div id="id01" class="w3-modal" sty>
+
+  <div class="w3-modal-content w3-animate-top w3-card-4">
+    <header class="w3-container" style="background-color:#45b6fe"> 
+      <span onclick="document.getElementById('id01').style.display='none'" 
+      class="w3-button w3-display-topright">&times;</span>
+      <h2 style="color:white">Filter</h2>
+    </header>
+    <center>
+    <br>
+    <div class="w3-container">
+    <h4><span style="margin-right:6.5%" ><b>Choose Category</b></span></h4><br>
+  
+                        
+                      
+                           
+                            <form  action="/category" method="GET" role="category">
+                                <select style="height:20%" class="form-select @error('category') is-invalid @enderror"  name="category" id="category"aria-label="Default select example">
+                               <option selected>Sports</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Gaming">Gaming</option><h1>
+                                </select>
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                                <br>
+                                
+                                </form>
+
+    </div>
+</center>
+<br>
+<br>
+    <footer class="w3-container" style="background-color:#45b6fe">
+    
+    </footer>
+  </div>
+</div>
+</div>
+        
        
     </body>
 </html>

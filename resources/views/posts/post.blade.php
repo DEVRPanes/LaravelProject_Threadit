@@ -32,34 +32,10 @@
 
     <body>
         <!-- Top Bar Start -->
-       
+        
         <!-- Top Bar Start -->
         
-        <!-- Brand Start -->
-        <div class="brand" style="background-color:#45b6fe">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-4">
-                        <div class="b-logo"> 
-                            <a href="index.html">
-                                <img src="{{ asset('/storage/img/logo.jpg') }}" alt="Logo">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-4">
-                        <div class="b-ads">
-                          
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4">
-                        <div class="b-search">
-                     
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Brand End -->
+        
 
 <div class="container">
     
